@@ -1,0 +1,6 @@
+interface $name
+speed $speed
+vrf forwarding $vrf
+ip address $ipv4address
+ipv6 address $ipv6address
+!

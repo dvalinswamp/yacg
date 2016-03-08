@@ -1,0 +1,11 @@
+vrf definition $name
+ rd $rd
+ address-family ipv4 unicast
+  route-target import $ipv4_rt_import
+  route-target export $ipv4_rt_export
+!
+ address-family ipv6 unicast
+  route-target import $ipv6_rt_import
+  route-target export $ipv6_rt_export
+!
+ 

@@ -1,0 +1,7 @@
+interface $name
+ description $description
+ switchport
+ switchport mode trunk
+ switchport trunk allowed vlan $allowed_vlan_list
+ mtu 9100
+ ip dhcp snooping trust

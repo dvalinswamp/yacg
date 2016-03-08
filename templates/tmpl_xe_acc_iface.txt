@@ -1,0 +1,21 @@
+interface $name
+ description $description
+ switchport access vlan $acc_vlan
+ switchport mode access
+ switchport voice vlan $voice_vlan
+ mtu 9100
+ authentication event fail action next-method
+ authentication event server dead action authorize vlan 109
+ authentication event server alive action reinitialize
+ authentication host-mode multi-auth
+ authentication open
+ authentication order dot1x mab
+ authentication priority dot1x mab
+ authentication port-control auto
+ authentication periodic
+ authentication timer reauthenticate server
+ authentication violation restrict
+ mab
+ dot1x pae authenticator
+ dot1x timeout tx-period 5
+ spanning-tree portfast

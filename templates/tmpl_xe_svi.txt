@@ -1,0 +1,3 @@
+interface $name
+ ip address $ipv4_address
+ ipv6 address $ipv6_address

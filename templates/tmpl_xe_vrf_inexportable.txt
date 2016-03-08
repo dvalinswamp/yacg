@@ -1,0 +1,7 @@
+vrf definition $name
+ rd $rd
+ address-family ipv4 unicast
+!
+ address-family ipv6 unicast
+!
+ 
