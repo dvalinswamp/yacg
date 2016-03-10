@@ -32,15 +32,33 @@ for row in range(2, sheet.max_row + 1):
 
 sheet = data.get_sheet_by_name('Interfaces')
 for row in range(2, sheet.max_row + 1):
-    device = sheet['A' + str(row).strip()].value
-    name = sheet['B' + str(row).strip()].value
-    media = sheet['C' + str(row).strip()].value
-    speed = sheet['D' + str(row).strip()].value
-    tag = sheet['E' + str(row).strip()].value
-    vrf = sheet['F' + str(row).strip()].value
-    ipv4_address = sheet['G' + str(row).strip()].value
-    ipv6_address = sheet['H' + str(row).strip()].value
+    device = str(sheet['A' + str(row).strip()].value)
+    name = str(sheet['B' + str(row).strip()].value)
+    media = str(sheet['C' + str(row).strip()].value)
+    speed = str(sheet['D' + str(row).strip()].value)
+    tag = str(sheet['E' + str(row).strip()].value)
+    vrf = str(sheet['F' + str(row).strip()].value)
+    ipv4_address = str(sheet['G' + str(row).strip()].value)
+    ipv6_address = str(sheet['H' + str(row).strip()].value)
     devices[device].CreateInterface(name, speed, media, tag, vrf, ipv4_address, ipv6_address)
+    print('created interface',name,'for pe',device)
+
+
+sheet = data.get_sheet_by_name('L2ifaces')
+for row in range(2, sheet.max_row + 1):
+    print('starting l2 interfaces')
+    device = sheet['A' + str(row).strip()].value
+    ifname = sheet['B' + str(row).strip()].value
+    description =  sheet['C' + str(row).strip()].value
+    mode = sheet['D' + str(row).strip()].value
+    allowed_vlans = sheet['E' + str(row).strip()].value
+    print ('processing', device, ifname, mode)
+    if (mode=='trunk'):
+        print('creating a trunk from main')
+        devices[device].CreateTrunk(ifname, description, allowed_vlans)
+    elif (mode=='access'):
+        devices[device].CreateAccess(ifname, description, allowed_vlans)
+
 
 # sheet = data.get_sheet_by_name('MPLS_P2P')
 # for row in range (2, sheet.max_row+1):

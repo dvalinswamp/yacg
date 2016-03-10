@@ -46,6 +46,7 @@ class SVI:
 
 class Interface:
     def __init__(self, name, speed, media, tag, vrf, ipv4_address, ipv6_address, os):
+
         self.os = os
         self.name = name
         self.speed = speed
@@ -54,36 +55,37 @@ class Interface:
         self.vrf = vrf
         self.ipv4address = ipv4_address
         self.ipv6address = ipv6_address
+        print('creating an interface', name, tag)
 
     def Print(self):
         if (self.os == 'XE'):
-            if ((self.tag == '0') & (self.vrf == 'GRT')):
+            if ((self.tag == "0") & (self.vrf == 'GRT')):
                 t = UntaggedTemplate
-                #            print('Untagged Detected')
+                print('Untagged Detected')
                 print(t.substitute(name=self.name, speed=self.speed, media=self.media, ipv4address=self.ipv4address,
                                    ipv6address=self.ipv6address))
-            elif ((self.tag != '0') & (self.vrf == 'GRT')):
+            elif ((self.tag != "0") & (self.vrf == 'GRT')):
                 t = TaggedTemplate
-                #            print('Tagged Detected')
+                print('Tagged Detected')
                 print(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
-            elif ((self.tag == '0') & (self.vrf != 'GRT')):
+            elif ((self.tag != "0") & (self.vrf != 'GRT')):
                 t = VRFTaggedTemplate
-                #            print('Tagged Detected')
+                print('Tagged Detected')
                 print(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
-            elif ((self.tag != '0') & (self.vrf != 'GRT')):
+            elif ((self.tag == "0") & (self.vrf != 'GRT')):
                 t = VRFUntaggedTemplate
-                #            print('Tagged Detected')
-                print(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag, vrf=self.vrf,
+                print('UnTagged Detected')
+                print(t.substitute(name=self.name, speed=self.speed, media=self.media, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
 
 
-                # int1 = Interface('Ten1/1','10000','10G-SR','0','GRT','10.0.0.1/30','2001::1/127')
-                # int1.Print()
-                # int2 = Interface('Ten1/2', '10000', '10G-SR', '1','GRT','10.0.0.1/30', '2001::1/127')
-                # int2.Print()
-                # int3 = Interface('Ten1/3','10000','10G-SR','0','A','10.0.1.1/30','2001::2:1/127')
-                # int3.Print()
-                # int4 = Interface('Ten1/4', '10000', '10G-SR', '1','B','10.0.2.1/30', '2001::3:1/127')
-                # int4.Print()
+#int1 = Interface('Ten1/1','10000','10G-SR','0','GRT','10.0.0.1/30','2001::1/127', 'XE')
+#int1.Print()
+#int2 = Interface('Ten1/2', '10000', '10G-SR', '1','GRT','10.0.0.1/30', '2001::1/127', 'XE')
+#int2.Print()
+#int3 = Interface('Ten1/3','10000','10G-SR','0','A','10.0.1.1/30','2001::2:1/127', 'XE')
+#int3.Print()
+#int4 = Interface('Ten1/4', '10000', '10G-SR', '1','B','10.0.2.1/30', '2001::3:1/127', 'XE')
+#int4.Print()
