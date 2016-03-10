@@ -1,7 +1,7 @@
 from string import Template
 
-tmpl_xe_ldp = open("./templates/tmpl_xe_mpls_iface_ldp.txt", "r")
-tmpl_xe_rsvp = open("./templates/tmpl_xe_mpls_iface_rsvp.txt", "r")
+tmpl_xe_ldp = open("./templates/tmpl_xe_iface_ldp.txt", "r")
+tmpl_xe_rsvp = open("./templates/tmpl_xe_iface_rsvp.txt", "r")
 tmpl_xe_ldp_data = tmpl_xe_ldp.read()
 tmpl_xe_rsvp_data = tmpl_xe_rsvp.read()
 

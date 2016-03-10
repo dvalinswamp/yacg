@@ -1,0 +1,3 @@
+interface $name
+ mpls traffic-eng tunnels 
+ ip rsvp bandwidth

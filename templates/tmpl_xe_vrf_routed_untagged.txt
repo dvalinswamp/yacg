@@ -1,6 +1,6 @@
 interface $name
-speed $speed
-vrf forwarding $vrf
-ip address $ipv4address
-ipv6 address $ipv6address
+ speed $speed
+ vrf forwarding $vrf
+ ip address $ipv4address 255.255.255.252
+ ipv6 address $ipv6address/126
 !

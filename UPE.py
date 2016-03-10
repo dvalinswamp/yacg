@@ -13,22 +13,19 @@ class UPE:
         self.mgmtip = mgmtip
         self.os = os
 
-    @staticmethod
-    def CreateTrunk(name, description, allowed_vlans):
+    def CreateTrunk(self, name, description, allowed_vlans):
         #        print('creating interface',name)
-        os = UPE.os
+        os = self.os
         interface = Trunk(name, description, allowed_vlans, os)
         UPE.interfaces[name] = interface
 
-    @staticmethod
-    def CreateAcc(name, description, acc_vlan, voice_vlan):
-        os = UPE.os
+    def CreateAcc(self, name, description, acc_vlan, voice_vlan):
+        os = self.os
         interface = Acc(name, description, acc_vlan, voice_vlan, os)
         UPE.interfaces[name] = interface
 
-    @staticmethod
-    def CreateVlan(vid, name, description):
-        os = UPE.os
+    def CreateVlan(self, vid, name, description):
+        os = self.os
         vlan = Vlan(vid, name, description, os)
         UPE.vlans.append(vlan)
 
