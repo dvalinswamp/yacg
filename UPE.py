@@ -2,7 +2,6 @@ from SwitchedInterface import Acc
 from SwitchedInterface import Trunk
 from Vlan import Vlan
 
-
 class UPE:
 
 
@@ -13,6 +12,7 @@ class UPE:
         self.os = os
         self.interfaces = []
         self.vlans = []
+        self.ae={}
 
 
     def CreateTrunk(self, name, description, allowed_vlans):
@@ -21,9 +21,9 @@ class UPE:
         interface = Trunk(name, description, allowed_vlans, os)
         self.interfaces.append(interface)
 
-    def CreateAcc(self, name, description, acc_vlan, voice_vlan):
+    def CreateAcc(self, name, description, acc_vlan):
         os = self.os
-        interface = Acc(name, description, acc_vlan, voice_vlan, os)
+        interface = Acc(name, description, acc_vlan, os)
         self.interfaces.append(interface)
 
     def CreateVlan(self, vid, name, description):
@@ -38,3 +38,7 @@ class UPE:
     def PrintVlans(self):
         for i in self.vlans:
             i.Print()
+
+    def CreateAE(self, abbr, aenum):
+        self.ae[abbr] = aenum
+

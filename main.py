@@ -27,8 +27,10 @@ for row in range(2, sheet.max_row + 1):
     if (not os): print('Device ' + host + ' os definition absent')
     if (devtype == 'PE'):
         devices[host] = (PE(host, mgmtiface, ip, os))
-    if (devtype == 'UPE'):
+    elif (devtype == 'UPE'):
         devices[host] = (UPE(host, mgmtiface, ip, os))
+    else:
+        print(devtype, ": devtype unknown")
 
 sheet = data.get_sheet_by_name('Interfaces')
 for row in range(2, sheet.max_row + 1):
@@ -40,8 +42,19 @@ for row in range(2, sheet.max_row + 1):
     vrf = str(sheet['F' + str(row).strip()].value)
     ipv4_address = str(sheet['G' + str(row).strip()].value)
     ipv6_address = str(sheet['H' + str(row).strip()].value)
+    description =  str(sheet['I' + str(row).strip()].value)
     devices[device].CreateInterface(name, speed, media, tag, vrf, ipv4_address, ipv6_address)
     print('created interface',name,'for pe',device)
+
+sheet = data.get_sheet_by_name('Vlans')
+for row in range(2, sheet.max_row + 1):
+    print('starting Vlans')
+    device = sheet['A' + str(row).strip()].value
+    vid = sheet['B' + str(row).strip()].value
+    name =  sheet['C' + str(row).strip()].value
+    descr = sheet['D' + str(row).strip()].value
+    print ('processing', device, vid, name, descr)
+    devices[device].CreateVlan(vid, name, descr)
 
 
 sheet = data.get_sheet_by_name('L2ifaces')
@@ -51,13 +64,21 @@ for row in range(2, sheet.max_row + 1):
     ifname = sheet['B' + str(row).strip()].value
     description =  sheet['C' + str(row).strip()].value
     mode = sheet['D' + str(row).strip()].value
-    allowed_vlans = sheet['E' + str(row).strip()].value
-    print ('processing', device, ifname, mode)
+    allowed_vlans = str(sheet['E' + str(row).strip()].value)
+    print ('processing', device, ifname, mode, allowed_vlans)
     if (mode=='trunk'):
         print('creating a trunk from main')
         devices[device].CreateTrunk(ifname, description, allowed_vlans)
     elif (mode=='access'):
-        devices[device].CreateAccess(ifname, description, allowed_vlans)
+        devices[device].CreateAcc(ifname, description, allowed_vlans)
+
+sheet = data.get_sheet_by_name('AE')
+for row in range(2, sheet.max_row + 1):
+    print('starting AE interfaces')
+    device = sheet['A' + str(row).strip()].value
+    abbr = sheet['B' + str(row).strip()].value
+    aenum = sheet['C' + str(row).strip()].value
+    devices[device].CreateAE(abbr, aenum)
 
 
 # sheet = data.get_sheet_by_name('MPLS_P2P')

@@ -4,7 +4,6 @@ from SwitchedInterface import Trunk
 from Vlan import Vlan
 from VRF import VRF
 
-
 class PE:
 
 
@@ -17,6 +16,8 @@ class PE:
         self.labelled_interfaces = []
         self.vrfs = []
         self.vlans = []
+        self.ae={}
+
     #        print('creating device',self.name)
 
     #    def print(self):
@@ -61,3 +62,6 @@ class PE:
         os = self.os
         interface = Trunk(name, description, allowed_vlans, os)
         self.interfaces.append(interface)
+
+    def CreateAE(self, abbr, aenum):
+        self.ae[abbr] = aenum

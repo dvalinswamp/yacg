@@ -2,7 +2,7 @@ interface $name
  description $description
  switchport access vlan $acc_vlan
  switchport mode access
- switchport voice vlan $voice_vlan
+ switchport voice vlan 100
  mtu 9100
  authentication event fail action next-method
  authentication event server dead action authorize vlan 109

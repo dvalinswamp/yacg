@@ -23,6 +23,7 @@ pe
   - exportable in BGP
   - local (no RT's assigned)
  - vlan definition
+
 ---
 upe
  - generic device parameters

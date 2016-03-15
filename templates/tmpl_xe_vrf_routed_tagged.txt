@@ -2,6 +2,6 @@ interface $name.$tag
  encapsulation dot1q $tag
  vrf forwarding $vrf
  speed $speed
- ip address $ipv4address 255.255.255.252
- ipv6 address $ipv6address/126
+ ip address $ipv4address 255.255.255.254
+ ipv6 address $ipv6address/127
 !

@@ -25,19 +25,17 @@ class Trunk:
 
 
 class Acc:
-    def __init__(self, name, description, acc_vlan, voice_vlan, os):
+    def __init__(self, name, description, acc_vlan, os):
         self.os = os
         self.name = name
         self.description = description
         self.acc_vlan = acc_vlan
-        self.voice_vlan = voice_vlan
 
     def Print(self):
        # if (self.os == 'XE'):
             t = XEAccessTemplate
             #            print('Untagged Detected')
-            print(t.substitute(name=self.name, description=self.description, acc_vlan=self.acc_vlan,
-                               voice_vlan=self.voice_vlan))
+            print(t.substitute(name=self.name, description=self.description, acc_vlan=self.acc_vlan))
 #int1 = Trunk('Ten1/1','test_trunk','10-40','XE')
 #int1.Print()
 #int2 = Trunk('Ten1/2', '10000', '10G-SR', '1','GRT','10.0.0.1/30', '2001::1/127')
