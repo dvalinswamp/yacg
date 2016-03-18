@@ -10,31 +10,35 @@ XEVRFInexpTemplate = Template(tmpl_xe_inexp_vrf_data)
 
 
 class VRF:
-    def __init__(self, os, name, rd='Null', is_exportable='Null', ipv4_rt_import='Null', ipv4_rt_export='Null',
-                 ipv6_rt_import='Null', ipv6_rt_export='Null'):
-        self.os = os
+    def __init__(self, name, os, rd, ipv4_rt_import='', ipv4_rt_export='',
+                 ipv6_rt_import='', ipv6_rt_export=''):
         self.name = name
+        self.os = os
         self.rd = rd
-        self.is_exportable = is_exportable
         self.ipv4_rt_import = ipv4_rt_import
         self.ipv4_rt_export = ipv4_rt_export
         self.ipv6_rt_export = ipv6_rt_export
         self.ipv6_rt_import = ipv6_rt_import
 
     def Print(self):
+        if(bool(self.ipv4_rt_import) & bool(self.ipv4_rt_import) & bool(self.ipv4_rt_import) & bool(self.ipv4_rt_import)):
+            self.is_exportable = 1
+            print(self.os)
+        else:
+            self.is_exportable = 0
+
         if (self.os == 'XE'):
-            if (self.is_exportable == '0'):
-                print('Inexp Detected')
+            if (self.is_exportable == False):
                 t = XEVRFInexpTemplate
                 print(t.substitute(name=self.name, rd=self.rd))
             else:
                 t = XEVRFExpTemplate
-                print('Exp Detected')
+                print()
                 print(t.substitute(name=self.name, rd=self.rd, ipv4_rt_import=self.ipv4_rt_import,
                                    ipv4_rt_export=self.ipv4_rt_export, ipv6_rt_export=self.ipv6_rt_export,
                                    ipv6_rt_import=self.ipv6_rt_import))
 
-                # a=VRF('A','65400:1','1','65400:1','65400:2','65400:3','65400:4')
-                # b=VRF('A','65400:1','0')
-                # a.Print()
-                # b.Print()
+#a = VRF('A', 'XE', 'rd', '65400:1','65400:2','65400:3','65400:4')
+#b = VRF('B', 'XE', '65400:1')
+#a.Print()
+#b.Print()

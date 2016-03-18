@@ -31,9 +31,10 @@ class PE:
         print('function call - pe/create iface for pe', self.name)
 
 
-    def CreateVRF(self, name, rd='Null', is_exportable='Null', ipv4_rt_import='Null', ipv4_rt_export='Null',
+    def CreateVRF(self, name, rd='Null', ipv4_rt_import='Null', ipv4_rt_export='Null',
                   ipv6_rt_import='Null', ipv6_rt_export='Null'):
-        vrf = VRF(name, rd, is_exportable, ipv4_rt_import, ipv4_rt_export, ipv6_rt_import, ipv6_rt_export, self.os)
+
+        vrf = VRF(name, self.os, rd, ipv4_rt_import, ipv4_rt_export, ipv6_rt_import, ipv6_rt_export)
         self.vrfs.append(vrf)
 
     def PrintInterfaces(self):

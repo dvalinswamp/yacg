@@ -3,16 +3,10 @@ from openpyxl import load_workbook
 from PE import PE
 from UPE import UPE
 
-# from MPLS import LabeledInterface
-
-management = {'snmp_community': [],
-              'management_subnets': [],
-              'default_user': [],
-              'default_password': []
-              }
 
 devices = {}
 data = load_workbook('data.xlsx')
+
 sheet = data.get_sheet_by_name('Devices')
 for row in range(2, sheet.max_row + 1):
     host = sheet['A' + str(row).strip()].value
@@ -51,11 +45,10 @@ for row in range(2, sheet.max_row + 1):
     print('starting Vlans')
     device = sheet['A' + str(row).strip()].value
     vid = sheet['B' + str(row).strip()].value
-    name =  sheet['C' + str(row).strip()].value
+    name = sheet['C' + str(row).strip()].value
     descr = sheet['D' + str(row).strip()].value
-    print ('processing', device, vid, name, descr)
+    print('processing', device, vid, name, descr)
     devices[device].CreateVlan(vid, name, descr)
-
 
 sheet = data.get_sheet_by_name('L2ifaces')
 for row in range(2, sheet.max_row + 1):
@@ -80,13 +73,28 @@ for row in range(2, sheet.max_row + 1):
     aenum = sheet['C' + str(row).strip()].value
     devices[device].CreateAE(abbr, aenum)
 
+sheet = data.get_sheet_by_name('VRF')
+for row in range(2, sheet.max_row + 1):
+    print('starting VRFs')
+    device = sheet['A' + str(row).strip()].value
+    vrfname = sheet['B' + str(row).strip()].value
+    rd = sheet['C' + str(row).strip()].value
+    ipv4_import_RT = sheet['D' + str(row).strip()].value
+    ipv4_export_RT = sheet['E' + str(row).strip()].value
+    ipv6_import_RT = sheet['F' + str(row).strip()].value
+    ipv6_export_RT = sheet['G' + str(row).strip()].value
+    devices[device].CreateVRF(vrfname, rd, ipv4_import_RT, ipv4_export_RT, ipv6_import_RT, ipv6_export_RT)
 
-# sheet = data.get_sheet_by_name('MPLS_P2P')
-# for row in range (2, sheet.max_row+1):
-#    device = sheet['A' + str(row)].value
-#    name = sheet['B' + str(row)].value
-#    tag = sheet['E' + str(row)].value
-#    devices[device].CreateInterface(name, speed, media, tag, vrf, ipv4_address, ipv6_address)
+
+sheet = data.get_sheet_by_name('LIB')
+for row in range (2, sheet.max_row+1):
+    device = sheet['A' + str(row)].value
+    iface = sheet['B' + str(row)].value
+    lproto = sheet['C' + str(row)].value
+    iproto = sheet['E' + str(row)].value
+    area = sheet['F' + str(row)].value
+    devices[device].CreateLabelledInterface(iface, lproto, iproto)
+    devices[device].CreateIGPInterface(iface, iproto, area)
 
 
 # sheet = data.get_sheet_by_name('DHCP')
@@ -103,5 +111,5 @@ for row in range(2, sheet.max_row + 1):
 
 # devices['bbr02'].PrintInterfaces()
 for host in devices:
-    print(host)
     devices[host].PrintInterfaces()
+
