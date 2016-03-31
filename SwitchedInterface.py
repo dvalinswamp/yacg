@@ -1,13 +1,8 @@
 from string import Template
 
-tmpl_xe_access = open("./templates/tmpl_xe_acc_iface.txt", "r")
-tmpl_xe_access_data = tmpl_xe_access.read()
+XETrunkTemplate = Template(open("./templates/tmpl_xe_trunk_iface.txt", "r").read())
+XEAccessTemplate = Template(open("./templates/tmpl_xe_acc_iface.txt", "r").read())
 
-tmpl_xe_trunk = open("./templates/tmpl_xe_trunk_iface.txt", "r")
-tmpl_xe_trunk_data = tmpl_xe_trunk.read()
-
-XETrunkTemplate = Template(tmpl_xe_trunk_data)
-XEAccessTemplate = Template(tmpl_xe_access_data)
 
 class Trunk:
     def __init__(self, name, description, allowed_vlan_list, os):
@@ -21,7 +16,7 @@ class Trunk:
         if (self.os == 'XE'):
             t = XETrunkTemplate
             #            print('Untagged Detected')
-            print(t.substitute(name=self.name, description=self.description, allowed_vlan_list=self.allowed_vlan_list))
+            return (t.substitute(name=self.name, description=self.description, allowed_vlan_list=self.allowed_vlan_list))
 
 
 class Acc:
@@ -35,7 +30,8 @@ class Acc:
        # if (self.os == 'XE'):
             t = XEAccessTemplate
             #            print('Untagged Detected')
-            print(t.substitute(name=self.name, description=self.description, acc_vlan=self.acc_vlan))
+            return (t.substitute(name=self.name, description=self.description, acc_vlan=self.acc_vlan))
+
 #int1 = Trunk('Ten1/1','test_trunk','10-40','XE')
 #int1.Print()
 #int2 = Trunk('Ten1/2', '10000', '10G-SR', '1','GRT','10.0.0.1/30', '2001::1/127')

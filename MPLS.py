@@ -1,12 +1,7 @@
 from string import Template
 
-tmpl_xe_ldp = open("./templates/tmpl_xe_iface_ldp.txt", "r")
-tmpl_xe_rsvp = open("./templates/tmpl_xe_iface_rsvp.txt", "r")
-tmpl_xe_ldp_data = tmpl_xe_ldp.read()
-tmpl_xe_rsvp_data = tmpl_xe_rsvp.read()
-
-XELDPTemplate = Template(tmpl_xe_ldp_data)
-XERSVPTemplate = Template(tmpl_xe_rsvp_data)
+XELDPTemplate = Template(open("./templates/tmpl_xe_iface_ldp.txt", "r").read())
+XERSVPTemplate = Template(open("./templates/tmpl_xe_iface_rsvp.txt", "r").read())
 
 
 class LabelledInterface:
@@ -20,8 +15,8 @@ class LabelledInterface:
         if (self.os == 'XE'):
             if (self.protocol == 'ldp'):
                 t = XELDPTemplate
-                print(t.substitute(name=self.name, tag=self.tag))
+                return(t.substitute(name=self.name, tag=self.tag))
 
             elif (self.protocol == 'rsvp'):
                 t = XERSVPTemplate
-                print(t.substitute(name=self.name, tag=self.tag))
+                return(t.substitute(name=self.name, tag=self.tag))

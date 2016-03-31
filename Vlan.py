@@ -1,8 +1,6 @@
 from string import Template
 
-tmpl_xe_vlan = open("./templates/tmpl_xe_vlan.txt", "r")
-tmpl_xe_vlan_data = tmpl_xe_vlan.read()
-XEVlanTemplate = Template(tmpl_xe_vlan)
+XEVlanTemplate = Template((open("./templates/tmpl_xe_vlan.txt", "r")).read())
 
 
 class Vlan:
@@ -15,4 +13,14 @@ class Vlan:
     def Print(self):
         if (self.os == 'XE'):
             t = XEVlanTemplate
-            print(t.substitute(vid=self.vid, description=self.description))
+            return(t.substitute(vid=self.vid, description=self.description))
+        if (self.os == 'XR'):
+            t = XRVlanTemplate
+            return(t.substitute(vid=self.vid, description=self.description))
+        if (self.os == 'Jun'):
+            t = JunVlanTemplate
+            return(t.substitute(vid=self.vid, description=self.description))
+
+
+a=Vlan('400','cust1','Custome1 test vlan','XE')
+print(a.Print())

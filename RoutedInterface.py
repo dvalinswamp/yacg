@@ -1,28 +1,11 @@
 from string import Template
 
-tmpl_routed_tagged = open("./templates/tmpl_xe_routed_tagged.txt", "r")
-tmpl_routed_tagged_data = tmpl_routed_tagged.read()
-
-tmpl_routed_untagged = open("./templates/tmpl_xe_routed_untagged.txt", "r")
-tmpl_routed_untagged_data = tmpl_routed_untagged.read()
-
-tmpl_vrf_routed_tagged = open("./templates/tmpl_xe_vrf_routed_tagged.txt", "r")
-tmpl_vrf_routed_tagged_data = tmpl_vrf_routed_tagged.read()
-
-tmpl_vrf_routed_untagged = open("./templates/tmpl_xe_vrf_routed_untagged.txt", "r")
-tmpl_vrf_routed_untagged_data = tmpl_vrf_routed_untagged.read()
-
-tmpl_svi = open("./templates/tmpl_xe_svi.txt", "r")
-tmpl_vrf_svi = open("./templates/tmpl_xe_vrf_svi.txt", "r")
-tmpl_svi_data = tmpl_svi.read()
-tmpl_vrf_svi_data = tmpl_svi.read()
-
-TaggedTemplate = Template(tmpl_routed_tagged_data)
-UntaggedTemplate = Template(tmpl_routed_untagged_data)
-VRFTaggedTemplate = Template(tmpl_vrf_routed_tagged_data)
-VRFUntaggedTemplate = Template(tmpl_vrf_routed_untagged_data)
-SVITemplate = Template(tmpl_svi_data)
-VRFSVITemplate = Template(tmpl_vrf_svi_data)
+TaggedTemplate = Template(open("./templates/tmpl_xe_routed_tagged.txt", "r").read())
+UntaggedTemplate = Template(open("./templates/tmpl_xe_routed_untagged.txt", "r").read())
+VRFTaggedTemplate = Template(open("./templates/tmpl_xe_vrf_routed_tagged.txt", "r").read())
+VRFUntaggedTemplate = Template(open("./templates/tmpl_xe_vrf_routed_untagged.txt", "r").read())
+SVITemplate = Template(open("./templates/tmpl_xe_svi.txt", "r").read())
+VRFSVITemplate = Template(open("./templates/tmpl_xe_vrf_svi.txt", "r").read())
 
 
 class SVI:
@@ -32,6 +15,7 @@ class SVI:
         self.vrf = vrf
         self.ipv4address = ipv4_address
         self.ipv6address = ipv6_address
+
 
     def Print(self):
         if (self.vrf == 'GRT'):
@@ -58,25 +42,28 @@ class Interface:
         print('creating an interface', name, tag)
 
     def Print(self):
+        print('starting print')
         if (self.os == 'XE'):
             if ((self.tag == "0") & (self.vrf == 'GRT')):
                 t = UntaggedTemplate
                 print('Untagged Detected')
-                print(t.substitute(name=self.name, speed=self.speed, media=self.media, ipv4address=self.ipv4address,
+                return(t.substitute(name=self.name, speed=self.speed, media=self.media, ipv4address=self.ipv4address,
                                    ipv6address=self.ipv6address))
             elif ((self.tag != "0") & (self.vrf == 'GRT')):
                 t = TaggedTemplate
                 print('Tagged Detected')
-                print(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag,
+                return(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
             elif ((self.tag != "0") & (self.vrf != 'GRT')):
                 t = VRFTaggedTemplate
                 print('Tagged Detected')
-                print(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag, vrf=self.vrf,
+                return(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
             elif ((self.tag == "0") & (self.vrf != 'GRT')):
                 t = VRFUntaggedTemplate
                 print('UnTagged Detected')
-                print(t.substitute(name=self.name, speed=self.speed, media=self.media, vrf=self.vrf,
+                return(t.substitute(name=self.name, speed=self.speed, media=self.media, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
 
+#int = Interface('Ten1/2', '10000', '10G-SR', '1','GRT','10.0.0.1/30', '2001::1/127', 'XE')
+#print(int.Print())

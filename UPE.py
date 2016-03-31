@@ -1,18 +1,14 @@
 from SwitchedInterface import Acc
 from SwitchedInterface import Trunk
 from Vlan import Vlan
+from device import PacketDevice
 
-class UPE:
+class UPE(PacketDevice):
 
 
     def __init__(self, name, mgmtiface, mgmtip, os):
-        self.name = name
-        self.mgmtiface = mgmtiface
-        self.mgmtip = mgmtip
-        self.os = os
-        self.interfaces = []
+        PacketDevice.__init__(self, name, mgmtiface, mgmtip, os)
         self.vlans = []
-        self.ae={}
 
 
     def CreateTrunk(self, name, description, allowed_vlans):
@@ -21,24 +17,32 @@ class UPE:
         interface = Trunk(name, description, allowed_vlans, os)
         self.interfaces.append(interface)
 
+
     def CreateAcc(self, name, description, acc_vlan):
         os = self.os
         interface = Acc(name, description, acc_vlan, os)
         self.interfaces.append(interface)
+
 
     def CreateVlan(self, vid, name, description):
         os = self.os
         vlan = Vlan(vid, name, description, os)
         self.vlans.append(vlan)
 
-    def PrintInterfaces(self):
-        for i in self.interfaces:
-            i.Print()
-
     def PrintVlans(self):
+        cfg = '!\n'
         for i in self.vlans:
-            i.Print()
+#             print(i.name)
+            cfg += i.Print()
 
-    def CreateAE(self, abbr, aenum):
-        self.ae[abbr] = aenum
+        return cfg
 
+
+    def PrintCfg(self):
+        cfg = ''
+        cfg += self.PrintSelf()
+        cfg = '!\n'
+        cfg += self.PrintInterfaces()
+        cfg += '\n!'
+        cfg += self.PrintVlans()
+        return cfg
