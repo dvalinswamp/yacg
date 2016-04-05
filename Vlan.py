@@ -22,5 +22,5 @@ class Vlan:
             return(t.substitute(vid=self.vid, description=self.description))
 
 
-a=Vlan('400','cust1','Custome1 test vlan','XE')
-print(a.Print())
+#a=Vlan('400','cust1','Custome1 test vlan','XE')
+#print(a.Print())

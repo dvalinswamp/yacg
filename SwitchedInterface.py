@@ -10,7 +10,7 @@ class Trunk:
         self.name = name
         self.description = description
         self.allowed_vlan_list = allowed_vlan_list
-        print('Created trunk', name)
+#        print('Created trunk', name)
 
     def Print(self):
         if (self.os == 'XE'):

@@ -12,7 +12,7 @@ class UPE(PacketDevice):
 
 
     def CreateTrunk(self, name, description, allowed_vlans):
-        print('creating interface',name)
+#        print('creating interface',name)
         os = self.os
         interface = Trunk(name, description, allowed_vlans, os)
         self.interfaces.append(interface)

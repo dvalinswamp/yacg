@@ -99,7 +99,7 @@ def ParseVRF():
 
 def ParseLIB():
     sheet = data.get_sheet_by_name('LIB')
-    for row in range (2, sheet.max_row+1):
+    for row in range(2, sheet.max_row+1):
         device = sheet['A' + str(row)].value
         iface = sheet['B' + str(row)].value
         labelproto = sheet['C' + str(row)].value

@@ -39,29 +39,29 @@ class Interface:
         self.vrf = vrf
         self.ipv4address = ipv4_address
         self.ipv6address = ipv6_address
-        print('creating an interface', name, tag)
+#        print('creating an interface', name, tag)
 
     def Print(self):
-        print('starting print')
+#        print('starting print')
         if (self.os == 'XE'):
             if ((self.tag == "0") & (self.vrf == 'GRT')):
                 t = UntaggedTemplate
-                print('Untagged Detected')
+#                print('Untagged Detected')
                 return(t.substitute(name=self.name, speed=self.speed, media=self.media, ipv4address=self.ipv4address,
                                    ipv6address=self.ipv6address))
             elif ((self.tag != "0") & (self.vrf == 'GRT')):
                 t = TaggedTemplate
-                print('Tagged Detected')
+#                print('Tagged Detected')
                 return(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
             elif ((self.tag != "0") & (self.vrf != 'GRT')):
                 t = VRFTaggedTemplate
-                print('Tagged Detected')
+#                print('Tagged Detected')
                 return(t.substitute(name=self.name, speed=self.speed, media=self.media, tag=self.tag, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
             elif ((self.tag == "0") & (self.vrf != 'GRT')):
                 t = VRFUntaggedTemplate
-                print('UnTagged Detected')
+#                print('UnTagged Detected')
                 return(t.substitute(name=self.name, speed=self.speed, media=self.media, vrf=self.vrf,
                                    ipv4address=self.ipv4address, ipv6address=self.ipv6address))
 
