@@ -58,19 +58,21 @@ class PE(PacketDevice):
 #        print(self.PrintInterfaces())
         if (bool(self.interfaces)):
            print('something in interfaces found')
-           cfg += '!!\n!!starting interface portion\n!!\n'
+           cfg += '\n!!\n!!starting interface portion\n!!\n'
            cfg += self.PrintInterfaces()
+        if (bool(self.ae)):
+           print('something in ae found')
+           cfg += '\n!!\n!!starting ae portion\n!!\n'
+           cfg += self.PrintAE()
         if (bool(self.vrfs)):
-           cfg += '\n!'
-           cfg += '!!\n!!starting vrf portion\n!!\n'
+           cfg += '\n!!\n!!starting vrf portion\n!!\n'
            cfg += self.PrintVRFs()
+
         if(bool(self.labelled_interfaces)):
-           cfg += '\n'
            cfg += '!!!\n!!starting labelif portion\n!!!\n'
            cfg += self.PrintLabelledInterfaces()
         if(bool(self.vlans)):
-           cfg += '\n'
-           cfg += '!!!\n!!starting vlan portion\n!!!\n'
+           cfg += '\n!!!\n!!starting vlan portion\n!!!\n'
            cfg += self.PrintVlans()
         return cfg
 

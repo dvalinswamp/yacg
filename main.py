@@ -112,7 +112,7 @@ def ParseLIB():
 SetLocation()
 
 devices = {}
-data = load_workbook('data2.xlsx')
+data = load_workbook('data.xlsx')
 shits = data.get_sheet_names()
 
 if ('Devices' in shits):
